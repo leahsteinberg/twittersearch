@@ -3,10 +3,6 @@ var twitterAPI = require("node-twitter-api");
 var http = require('http');
 
 
-//console.log("http is", http);
-
-
-
 var twitter = new twitterAPI({
  	consumerKey: key.consumerKey,
  	consumerSecret: key.consumerSecret,
@@ -16,31 +12,29 @@ var twitter = new twitterAPI({
 
 
 
-var make_request = function(req, query, callback){
+var make_request = function(oa, req, query, callback){
 	console.log("in make request, query is: ", query);
 
 console.log("r.s.o  ", req.session.oauth);
 var encoded_query = encodeURIComponent(query);
 console.log(encoded_query);
-twitter.search({q: encoded_query}, req.session.oauth.access_token, req.session.oauth.access_token_secret, function(error, data, response){
+var parameters = {q: encoded_query};
+oa.get("https://api.twitter.com/1.1/search/tweets.json?q="+encoded_query, req.session.access_token, req.session.access_token_secret, function(error, data, response){
 	if(error){
-		console.log(error);
-		console.log("there's an error in make request");
+	console.log( error);
 	}
 	else{
-		console.log("in make requesttt", data);
+		console.log(data);
+		//console.log(response);
 	}
 });
 
-// twitter.getRequestToken(function(error, requestToken, requestTokenSecret, results){
-// 	if(error){
-// 		console.log("error getting oauth request token: " + error);
-// 	}else{
-// 		console.log("skjfsdlkf");
-// 	}
-// })
 
 
 //callback(query);
 };
+
+
 module.exports.make_request = make_request;
+
+

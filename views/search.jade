@@ -1,0 +1,54 @@
+html.
+  <head>
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet" >
+    <link href="static/Flat-UI-master/css/flat-ui.css" rel="stylesheet">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+  </head>
+  <body id = "thebodyid">
+  <header id ="theheaderid">
+  
+  
+   <form action="/send" method="get" id="searchform">
+      <label> </label><input type="text" id="search_query"<br>
+      <input class="submit" type="submit" value="Search">
+      </form>  
+      <button id ="emojibutton">Add Random Emoji!</button>
+      </header>
+        <div id = "resultsdiv"> </div>
+
+   
+    <script>
+
+  $(document).ready(function(e) { 
+        console.log("doing some jquery!");
+
+      
+          $(".submit").click(function(e) {
+          console.log("jquery thinks they have pressed submit!");
+
+            e.preventDefault();
+            var formData = {
+              'twitter_query': document.getElementById("search_query").value
+            };
+            $.ajax({
+              type: "GET",
+              data: formData,
+              url: '/search',
+              dataType: 'json'
+            }).done(function(data) {
+            console.log("hiii in jade");
+
+              console.log("PRESENT DATA HERE!", data);
+              window.location = data;
+
+            });
+            
+          });
+          });
+
+
+    </script>
+   
+  </body>

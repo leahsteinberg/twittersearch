@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet" >
+    <link href="static/Flat-UI-master/css/flat-ui.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://fb.me/react-0.10.0.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
+
+
+  </head>
+  <body>
+
+ 
+    <div id="app"></div>
+    <script type="text/jsx">
+    /** @jsx React.DOM */
+
+    var Login = React.createClass({
+      click: function(ev) {
+        console.log("Hey buddy!");
+        $.ajax({
+            type: "GET",
+            url: '/send',
+            dataType: 'json'
+            }).done(function(data) {
+
+                window.location =data;
+            });
+      },
+      render: function(){
+        console.log("fuck you", document.cookie);
+
+        return <div>
+                    <input class="submit"
+                           type="submit"
+                           onClick={this.click}
+                           value="SIGN IN ssdfsdfTO TWITTER!">
+                    </input>
+                    <button id ="emojibutton">Add Random Emoji!</button>
+               </div>;
+
+      }
+    });
+
+    var TweetView = React.createClass({
+      render: function() {
+        return <div>Tweet</div>;
+      }
+    });
+    var App = React.createClass({
+      render: function() {
+        if (!document.cookie.logged_in){
+        return
+          <div>
+            <Login></Login>
+            <form action="/search" method="get">
+              <label>Hey</label>
+              <input type="text"></input>
+              <br/>
+              <input type="submit" value="Search"></input>
+              </form>
+              <TweetView></TweetView>
+          </div>
+          
+        }
+        else{
+          return
+        }
+        );
+      }
+    });
+    var mountNode = document.getElementById("app");
+
+    React.renderComponent(<App></App>, mountNode);
+
+
+
+  // $(document).ready(function(e) { 
+  //       console.log("doing some jquery!");
+  //         $(".submit").click(function(e) {
+  //         console.log("jquery thinks they have pressed submit!");
+  //           e.preventDefault();
+  //           $.ajax({
+  //             type: "GET",
+  //             url: '/send',
+  //             dataType: 'json'
+  //           }).done(function(data) {
+  //           console.log("hiii in jade");
+  //             console.log("PRESENT DATA HERE!", data);
+  //             window.location = data;
+  //           });
+  //         });
+  //         });
+
+
+  </script>
+  </body>
+  </html>

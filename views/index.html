@@ -28,7 +28,7 @@
             });
       },
       render: function(){
-        console.log("fuck you", document.cookie);
+        console.log("hi", document.cookie);
 
         return <div>
                     <input class="submit"
@@ -49,9 +49,7 @@
     });
     var App = React.createClass({
       render: function() {
-        if (!document.cookie.logged_in){
-        return
-          <div>
+        return <div>
             <Login></Login>
             <form action="/search" method="get">
               <label>Hey</label>
@@ -60,13 +58,7 @@
               <input type="submit" value="Search"></input>
               </form>
               <TweetView></TweetView>
-          </div>
-          
-        }
-        else{
-          return
-        }
-        );
+          </div>;
       }
     });
     var mountNode = document.getElementById("app");

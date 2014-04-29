@@ -24,6 +24,8 @@ var oa = new OAuth(
 	"http://warm-castle-7307.herokuapp.com/auth/twitter/callback",
 	"HMAC-SHA1"
 	);
+
+
 router.get('/', function(req, res){
 	 res.render('index', { title: 'Express' });
 
@@ -33,15 +35,14 @@ router.get('/tweets', function(req, res){
 
 });
 
+
+/* server end point for signing into twitter*/
 router.get('/send', function(req, res) {
-	console.log("new thing added to send!!!!1");
-	console.log("IN SEND!!!!");
 	oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret,results){
 		if(error){
 			console.log(error);
 		}
 		else{
-			
 			req.session.oauth = {};
 			req.session.oauth.token = oauth_token;
 			req.session.oauth.token_secret = oauth_token_secret;
@@ -68,12 +69,12 @@ router.get('/fave', function(req, res){
 		req.session.oauth.access_token_secret,
 		{'id': tweet_id}, "application/x-www-form-urlencoded",
 		function(error, data, response){
-		if(error){
-			console.log(error);
-		}
-		else{
-			res.json(JSON.parse(data));
-		}
+			if(error){
+				console.log(error);
+			}
+			else{
+				res.json(JSON.parse(data));
+			}
 	});
 
 });
@@ -81,7 +82,6 @@ router.get('/fave', function(req, res){
 
 router.get('/unfave', function(req, res){
 	var tweet_id = req.query['id'].trim();
-	var encoded_id = encodeURIComponent(tweet_id);
 	oa.post("https://api.twitter.com/1.1/favorites/destroy.json",
 		req.session.oauth.access_token, 
 		req.session.oauth.access_token_secret,
@@ -97,7 +97,7 @@ router.get('/unfave', function(req, res){
 
 });
 
-
+/*server endpoint for twitter to access after the user signs in*/
 router.get('/auth/twitter/callback', function(req, res, next){	
 	if (req.session.oauth) {
 		req.session.oauth.verifier = req.query.oauth_verifier;
@@ -106,7 +106,6 @@ router.get('/auth/twitter/callback', function(req, res, next){
 		function(error, oauth_access_token, oauth_access_token_secret, results){
 			if (error){
 				console.log(error);
-				res.send("yeah something broke.");
 			} else {
 				req.session.oauth.access_token = oauth_access_token;
 				req.session.oauth.access_token_secret = oauth_access_token_secret;

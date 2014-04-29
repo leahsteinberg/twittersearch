@@ -31,7 +31,6 @@ html.
                     url: '/search',
                     dataType: 'json'
                 }).done(function(incoming_data) {
-                    console.log(incoming_data);
                     this.setState({data: incoming_data})
                     this.setState({query: ''});
                 }.bind(this));
@@ -69,9 +68,9 @@ html.
                         url: '/unfave',
                         dataType: 'json'
                     }).done(function(incoming_data) {
-                        console.log(incoming_data);
-                        console.log("should be unfaving")
+                        if(incoming_data["created_at"]){
                         this.setState({faved: !this.state.faved});
+                        }
                     }.bind(this));
                 }
                 else{
@@ -81,9 +80,6 @@ html.
                         url: '/fave',
                         dataType: 'json'
                     }).done(function(incoming_data) {
-                        console.log(incoming_data);
-                        console.log("should be faving")
-                        console.log(incoming_data.length);
                         if(incoming_data["created_at"]){
                             this.setState({faved: !this.state.faved});
                         }
@@ -131,7 +127,6 @@ html.
         var TweetList = React.createClass({
             render: function(){
                 var tweets = this.props.data.map(function(tweet){
-                console.log("tweet username ", tweet.username);
                 return (<Tweet username= {tweet.user.screen_name} name = {tweet.user.name} text ={tweet.text} id_str={tweet.id_str} image={tweet.profile_image_url} initial_fave={tweet.favorited}/>);
                 });
                 return (

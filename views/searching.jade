@@ -1,18 +1,16 @@
 html.
   <head>
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" >
-    <link href="Flat-UI-master/css/flat-ui.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="http://fb.me/react-0.10.0.js"></script>
-    <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
-
-
-    </head>
-    <body>
-    <div class="container">
-	<div id="tweetsview"></div>
-  	<script type="text/jsx">
-    /** @jsx React.DOM */
+  <link href="bootstrap/css/bootstrap.css" rel="stylesheet" >
+  <link href="Flat-UI-master/css/flat-ui.css" rel="stylesheet">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="http://fb.me/react-0.10.0.js"></script>
+  <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
+  </head>
+  <body>
+  <div class="container">
+  <div id="tweetsview"></div>
+  <script type="text/jsx">
+        /** @jsx React.DOM */
         var TweetView = React.createClass({
             getInitialState: function(){
                 return {data: [], query: ''}
@@ -145,6 +143,6 @@ html.
         });
 
     React.renderComponent(<TweetView/>, document.getElementById("tweetsview"));
-</script>
-</div>
-</body>
+  </script>
+  </div>
+  </body>

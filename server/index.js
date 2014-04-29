@@ -10,7 +10,7 @@ var http = require('http');
 var twitter = new twitterAPI({
 	consumerKey: key.consumerKey,
 	consumerSecret: key.consumerSecret,
-	callback: "http://10.0.3.143:5040/auth/twitter/callback"
+	callback: "http://warm-castle-7307.herokuapp.com/auth/twitter/callback"
 });
 
 var OAuth = require('oauth').OAuth;
@@ -21,7 +21,7 @@ var oa = new OAuth(
 	key.consumerKey,
 	key.consumerToken,
 	"1.0",
-	"http://10.0.3.143:5040/auth/twitter/callback",
+	"http://warm-castle-7307.herokuapp.com/auth/twitter/callback",
 	"HMAC-SHA1"
 	);
 router.get('/', function(req, res){

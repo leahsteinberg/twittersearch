@@ -13,9 +13,7 @@
     "twitter-oauth": "0.0.6",
     "body-parser": "^1.0.2",
     "http": "0.0.0"
-} 
-}
-{
+},
   "engines":{
       "node": "0.10.26"
       }

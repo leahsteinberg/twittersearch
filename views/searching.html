@@ -1,17 +1,15 @@
 <html>
   <head>
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" >
-        <link href="Flat-UI-master/css/flat-ui.css" rel="stylesheet">
-
+    <link href="Flat-UI-master/css/flat-ui.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script src="http://fb.me/react-0.10.0.js"></script>
+    <script src="http://fb.me/react-0.10.0.js"></script>
     <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
 
 
   </head>
   <body>
     <div class="container">
-
 		
   
         <div id="tweetsview"></div>
@@ -26,7 +24,6 @@
 
             },
             handleSubmit: function(e){
-                var that = this;
                 e.preventDefault();
                 var formData = {
                     'searchtwitter': this.state.query,
@@ -39,16 +36,19 @@
                     dataType: 'json'
                 }).done(function(incoming_data) {
                     console.log(incoming_data);
-                    that.setState({data: incoming_data})
-                    that.setState({query: ''});
-                });
+                    this.setState({data: incoming_data})
+                    this.setState({query: ''});
+                }.bind(this));
             },
             render: function(){
+                var formString = "form-control";
+                var buttonString ="btn btn-block btn-lg btn-primary";
             return (
                 <div>
+                    <br/><br/>
                     <form onSubmit={this.handleSubmit}>
-                        <input type ="text" value={this.state.query} onChange={this.onChangeQuery}/>
-                        <button>Search Twitter</button>
+                        <input type ="text" value={this.state.query} onChange={this.onChangeQuery} className={formString}/>
+                        <button className={buttonString}>Search Twitter</button>
                     </form>
                     <TweetList data = {this.state.data}/>
                 </div>);  
@@ -57,42 +57,86 @@
 
 
         var Tweet = React.createClass({
+            getInitialState: function(){
+                return {faved: this.props.initial_fave}
+
+            },
             onClick: function(e){
                 e.preventDefault();
-                console.log(this.props.id_str);
-                /// get the tweet id. /
-                var formData = {
-                    'id': this.props.id_str,
-                    };
-                $.ajax({
-                    type: "GET",
-                    data: formData,
-                    url: '/fave',
-                    dataType: 'json'
-                }).done(function(incoming_data) {
-                    console.log(incoming_data);
-                });
-            },
+                    var formData = {
+                        'id': this.props.id_str,
+                        };
+                if(this.state.faved){
+                    $.ajax({
+                        type: "GET",
+                        data: formData,
+                        url: '/unfave',
+                        dataType: 'json'
+                    }).done(function(incoming_data) {
+                        console.log(incoming_data);
+                        console.log("should be unfaving")
+                        this.setState({faved: !this.state.faved});
+                    }.bind(this));
+                }
+                else{
+                    $.ajax({
+                        type: "GET",
+                        data: formData,
+                        url: '/fave',
+                        dataType: 'json'
+                    }).done(function(incoming_data) {
+                        console.log(incoming_data);
+                        console.log("should be faving")
+                        console.log(incoming_data.length);
+                        if(incoming_data["created_at"]){
+                            this.setState({faved: !this.state.faved});
+                        }
+                    }.bind(this));
+            }},
             render: function(){
+                if(this.state.faved){
+                    var divStyle = {
+                        backgroundColor: '#86E2D5'
+                    }
+                }
+                else{
+                    var divStyle = {
+                        backgroundColor: '#C5EFF7'
+                    };
+                }
+                var labelStyle = {
+                       float: "right"
+                };
+                var insideDiv ={
+                    backgroundColor: "#EEEEEE"
+                };
+                var boldFont ={
+                        fontWeight: "bold"
+                };
                 var wellString = "well";
                 var labelString = "label label-default";
-                console.log("rendering tweet");
-                return (<div className={wellString} onClick={this.onClick}>
-                    <img src={this.props.image}/>
-                    <p><span className={labelString}>@{this.props.username}</span>
-                    <span>      {this.props.name}</span></p>
-                    <p> {this.props.text}</p> 
-
-                    </div>
-                    );
-            }
+                var faveLabel = 'label label-info';
+                var nameLabel = "badge"
+                return (<div style={divStyle} className={wellString} onClick={this.onClick}>
+                        <img src={this.props.image}/>
+                        <p>
+                            <span className={nameLabel}>@{this.props.username}</span>
+                             <span style={boldFont}>         {this.props.name}</span>
+                            <span style={labelStyle} className={faveLabel}>click to fave and unfave</span>
+                        </p>
+                        <div style={insideDiv} className={wellString}>
+                            <p> {this.props.text}</p> 
+                            </div>
+                        </div>
+                        );
+                }
         });
 
         var TweetList = React.createClass({
             render: function(){
                 var tweets = this.props.data.map(function(tweet){
                 console.log("tweet username ", tweet.username);
-                return (<Tweet username= {tweet.user.screen_name} name = {tweet.user.name} text ={tweet.text} id_str={tweet.id_str} image={tweet.profile_image_url}/>);
+                return (<Tweet username= {tweet.user.screen_name} name = {tweet.user.name} text ={tweet.text} id_str={tweet.id_str} image={tweet.profile_image_url} initial_fave={tweet.favorited}/>);
                 });
                 return (
                     <div>

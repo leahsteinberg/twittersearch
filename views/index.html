@@ -8,6 +8,8 @@
 
   </head>
   <body>
+        <div class="container">
+
     <div id="app"></div>
     <script type="text/jsx">
     /** @jsx React.DOM */
@@ -23,11 +25,14 @@
             });
       },
       render: function(){
+                var buttonString ="btn btn-block btn-lg btn-primary";
         return <div>
+                  <br/> <br/> <br/>
                     <input class="submit"
                            type="submit"
                            onClick={this.click}
-                           value="sign in to twitter">
+                           value="Click Here To Sign In To Twitter"
+                           className={buttonString}>
                     </input>
                </div>;
       }
@@ -47,5 +52,6 @@
 
 
   </script>
+</div>
   </body>
   </html>

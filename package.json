@@ -1,5 +1,5 @@
 {
-  "name": "hello-world",
+  "name": "app",
   "description": "hello world test app",
   "version": "0.0.1",
   "private": true,
@@ -13,5 +13,5 @@
     "twitter-oauth": "0.0.6",
     "body-parser": "^1.0.2",
     "http": "0.0.0"
-  }
+} 
 }

@@ -9,11 +9,6 @@ var cookieParser = require('cookie-parser');
 var app = express();
 
 
-
-
-
-
-//console.log("cookie parse is", cookieParser);
 app.use(cookieParser());
 app.use(expressSession({secret: 'somesecret'}));
 app.use(bodyParser());

@@ -35,6 +35,7 @@ router.get('/tweets', function(req, res){
 
 router.get('/send', function(req, res) {
 	console.log("new thing added to send!!!!1");
+	console.log("IN SEND!!!!");
 	oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret,results){
 		if(error){
 			console.log(error);

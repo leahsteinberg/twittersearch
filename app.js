@@ -8,7 +8,6 @@ var expressSession = require('express-session');
 var cookieParser = require('cookie-parser');
 var app = express();
 
-
 app.use(cookieParser());
 app.use(expressSession({secret: 'somesecret'}));
 app.use(bodyParser());

@@ -23,6 +23,12 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use('/', routes);
 
 
+if(process.env.PORT){
+	console.log("using their port!");
+}
+else{
+	console.log("not using their port");
+}
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
   console.log('Listening on ' + port);

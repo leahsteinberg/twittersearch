@@ -24,7 +24,14 @@ var oa = new OAuth(
 	"http://sheltered-crag-4575.herokuapp.com/auth/twitter/callback",
 	"HMAC-SHA1"
 	);
+router.get('/'), function(req, res){
+	 res.render('index', { title: 'Express' });
 
+});
+router.get('/tweets'), function(req, res){
+	 res.render('searching', { title: 'Express' });
+
+});
 
 router.get('/send', function(req, res) {
 	oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret,results){
@@ -101,7 +108,7 @@ router.get('/auth/twitter/callback', function(req, res, next){
 			} else {
 				req.session.oauth.access_token = oauth_access_token;
 				req.session.oauth.access_token_secret = oauth_access_token_secret;
-				res.redirect("/searching.html");
+				res.redirect("/tweets");
 			}
 		}
 		);

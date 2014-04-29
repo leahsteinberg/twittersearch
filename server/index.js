@@ -10,7 +10,7 @@ var http = require('http');
 var twitter = new twitterAPI({
 	consumerKey: key.consumerKey,
 	consumerSecret: key.consumerSecret,
-	callback: "immense-tundra-4193.herokuapp.com/auth/twitter/callback"
+	callback: "http://immense-tundra-4193.herokuapp.com/auth/twitter/callback"
 });
 
 var OAuth = require('oauth').OAuth;

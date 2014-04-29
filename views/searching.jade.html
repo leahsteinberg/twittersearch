@@ -1,4 +1,4 @@
-html.
+<html>
   <head>
     <link href="bootstrap/css/bootstrap.css" rel="stylesheet" >
     <link href="Flat-UI-master/css/flat-ui.css" rel="stylesheet">
@@ -11,6 +11,7 @@ html.
   <body>
     <div class="container">
 		
+  
         <div id="tweetsview"></div>
   	    <script type="text/jsx">
         /** @jsx React.DOM */
@@ -58,6 +59,7 @@ html.
         var Tweet = React.createClass({
             getInitialState: function(){
                 return {faved: this.props.initial_fave}
+
             },
             onClick: function(e){
                 e.preventDefault();

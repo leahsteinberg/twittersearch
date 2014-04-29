@@ -12,10 +12,12 @@
 
  
     <div id="app"></div>
+
     <script type="text/jsx">
     /** @jsx React.DOM */
 
     var Login = React.createClass({
+
       click: function(ev) {
         console.log("Hey buddy!");
         $.ajax({
@@ -23,13 +25,11 @@
             url: '/send',
             dataType: 'json'
             }).done(function(data) {
-
+                //console.log(data);
                 window.location =data;
             });
       },
       render: function(){
-        console.log("hi", document.cookie);
-
         return <div>
                     <input class="submit"
                            type="submit"
@@ -41,14 +41,40 @@
 
       }
     });
+          console.log("in home page!!!!");
 
     var TweetView = React.createClass({
+      getInitialState: function(){
+        return{
+          username: '',
+          tweet: ''
+        };
+      },
+      componentDidMount: function(){
+
+      },
       render: function() {
-        return <div>Tweet</div>;
+        return <div>Tweet
+          <div>
+          {this.state.username} 
+          </div>
+          <div>
+          {this.state.username}
+          </div>
+        </div>;
       }
     });
+
+
+
+
+
+
     var App = React.createClass({
+      
       render: function() {
+        console.log("there cookie is:", document.cookie.logged_in);
+        if(document.cookie.logged_in === undefined){
         return <div>
             <Login></Login>
             <form action="/search" method="get">
@@ -59,7 +85,13 @@
               </form>
               <TweetView></TweetView>
           </div>;
+
       }
+      else{
+      console.log("there's a cookie!!!");
+    }
+    }
+    
     });
     var mountNode = document.getElementById("app");
 

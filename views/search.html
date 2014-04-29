@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet" >
+    <link href="static/Flat-UI-master/css/flat-ui.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://fb.me/react-0.10.0.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
+
+
+  </head>
+  <body>
+
+ 
+    <div id="app"></div>
+    <script type="text/jsx">
+    /** @jsx React.DOM */
+
+    var TweetView = React.createClass({
+        render: function(){
+          return (
+            <div>
+            <TweetList data = this.props.data/>
+            </div>
+            );
+        }
+          });
+
+    var TweetList = React.createClass({
+        render: function(){
+            var tweets = this.props.data.map(function(person){
+                return <Person username= {tweet.username} name = {tweet.name} text ={tweet.text}
+            });
+            return (
+                <div>
+                {tweets}
+                </div>
+                );
+        }
+    })
+
+
+    var Tweet = React.createClass({
+        render: function(){
+            return (<div>
+                <h2> {this.props.text}, {this.props.username}, {this.props.name}</h2>
+                </div>
+                );
+      }
+    });
+
+
+
+    var App = React.createClass({
+        getInitialState: function(e){
+            return {text: ''};
+        },
+        handleSubmit: function(e){
+        console.log("in handle submit of parent");
+          e.preventDefault();
+        $.ajax({
+          type: "GET",
+          url: '/search',
+          data: {query: event.target.value},
+          dataType: 'json'
+          }).done(function(data) {
+              console.log("got something back in search");
+              console.log(data);
+              this.state = ({text: event.target.value});
+              //window.location =data;
+          });
+      },        
+      render: function(){
+        return (
+            <div>
+              <form onSubmit={this.handleSubmit}>
+              <input onChange={this.onChange} value = {this.state.text}/>
+              <button> Search Twitter </button>
+              </form>
+              <TweetView></TweetView>
+            </div>
+        );
+      }
+    });
+
+var mountNode = document.getElementById("app");
+React.renderComponent(<App> </App>, mountNode);
+
+
+  </script>
+  </body>
+  </html>

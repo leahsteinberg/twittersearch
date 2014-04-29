@@ -5,6 +5,7 @@ var home = require(__dirname, 'views/index');
 var key = require("../server/key.js");
 var sys = require('sys');
 var twitterAPI = require('node-twitter-api');
+console.log("requiring index");
 var twitter = new twitterAPI({
 	consumerKey: key.consumerKey,
 	consumerSecret: key.consumerSecret,
@@ -24,13 +25,16 @@ var oa = new OAuth(
 	);
 /* GET home page. */
 // router.get('/', function(req, res) {
-//     // want it to serve static files.
-//     res.send("index.html");
+// 	console.log("trying to serv home");
+
+//     //want it to serve static files.
+//    res.redirect("/index.html");
 // });
 
 
 router.get('/send', function(req, res) {
-	console.log(" in /auth/twitter but really send");
+	console.log(" in send ");
+
 
 	oa.getOAuthRequestToken(function(error, oauth_token, oauth_token_secret,results){
 		if(error){
@@ -52,12 +56,34 @@ router.get('/send', function(req, res) {
 
 
 router.get('/search', function(req, res){
-	console.log("search!!!!!!");
-	var twitter_query = req.query.twitter_query;
+	console.log(req);
+	var twitter_query = req.query['searchtwitter'];
 	console.log("twitter query is: ", twitter_query);
 	get_tweets.make_request(oa, req, twitter_query, function(tweets){
+		console.log("got tweets back in router");
 		res.json(tweets);
 	});
+});
+
+router.get('/fave', function(req, res){
+	var tweet_id = req.query['id'];
+	console.log("tweet id is on the router. it's: ", tweet_id);
+
+	oa.post("https://api.twitter.com/1.1/favorites/create.json"+encoded_query, req.session.access_token, req.session.access_token_secret, function(error, data, response){
+	if(error){
+	console.log( error);
+	}
+	else{
+
+		//console.log(data);
+		// var jsonData = JSON.parse(data);
+		// console.log("got tweets back in api");
+		// //console.log("got back in make request,", jsonData["statuses"][0]);
+		// callback(jsonData["statuses"]);
+		//console.log(response);
+	}
+});
+
 });
 
 
@@ -73,10 +99,9 @@ router.get('/auth/twitter/callback', function(req, res, next){
 			} else {
 				req.session.oauth.access_token = oauth_access_token;
 				req.session.oauth.access_token_secret = oauth_access_token_secret;
-				/// change this line so it goes to index.html!! (also how to pass in session info)
-				res.cookie("logged_in", true);
-				res.redirect("/index.html");
-				//res.render('search', { title: 'Twitter Search' });
+				res.cookie("logged_in", "so_true");
+				res.redirect("/searching.html");
+
 
 			}
 		}

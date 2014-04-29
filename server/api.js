@@ -3,12 +3,12 @@ var twitterAPI = require("node-twitter-api");
 var http = require('http');
 
 
-var twitter = new twitterAPI({
- 	consumerKey: key.consumerKey,
- 	consumerSecret: key.consumerSecret,
- 	callback: "10.0.3.143:8080/auth/twitter/callback"
+// var twitter = new twitterAPI({
+//  	consumerKey: key.consumerKey,
+//  	consumerSecret: key.consumerSecret,
+//  	callback: "10.0.3.143:8080/auth/twitter/callback"
 	
- });
+//  });
 
 
 
@@ -24,10 +24,12 @@ oa.get("https://api.twitter.com/1.1/search/tweets.json?q="+encoded_query, req.se
 	console.log( error);
 	}
 	else{
-		console.log(data);
+
+		//console.log(data);
 		var jsonData = JSON.parse(data);
-		
-		callback(jsonData["statuses"][0]);
+		console.log("got tweets back in api");
+		//console.log("got back in make request,", jsonData["statuses"][0]);
+		callback(jsonData["statuses"]);
 		//console.log(response);
 	}
 });

@@ -7,14 +7,12 @@ html.
     <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
 
 
-  </head>
-  <body>
+    </head>
+    <body>
     <div class="container">
-		
-  
-        <div id="tweetsview"></div>
-  	    <script type="text/jsx">
-        /** @jsx React.DOM */
+	<div id="tweetsview"></div>
+  	<script type="text/jsx">
+    /** @jsx React.DOM */
         var TweetView = React.createClass({
             getInitialState: function(){
                 return {data: [], query: ''}
@@ -147,8 +145,6 @@ html.
         });
 
     React.renderComponent(<TweetView/>, document.getElementById("tweetsview"));
-  	</script>
-
+</script>
 </div>
-
-  </body>
+</body>

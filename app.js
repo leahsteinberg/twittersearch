@@ -13,7 +13,7 @@ app.use(expressSession({secret: 'somesecret'}));
 app.use(bodyParser());
 
 
-
+console.log("NEWest version!");
 
 
 app.set('views', path.join(__dirname, 'views'));

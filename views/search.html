@@ -28,7 +28,7 @@
     var TweetList = React.createClass({
         render: function(){
             var tweets = this.props.data.map(function(person){
-                return <Person username= {tweet.username} name = {tweet.name} text ={tweet.text}
+                return <Tweet username= {tweet.username} name = {tweet.name} text ={tweet.text}
             });
             return (
                 <div>
@@ -41,8 +41,8 @@
 
     var Tweet = React.createClass({
         render: function(){
-            return (<div>
-                <h2> {this.props.text}, {this.props.username}, {this.props.name}</h2>
+            return (<div class="well">
+                <p> HHIIIIII. {this.props.text}, {this.props.username}, {this.props.name}</p>
                 </div>
                 );
       }

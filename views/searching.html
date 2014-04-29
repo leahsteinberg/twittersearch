@@ -1,7 +1,8 @@
 <html>
   <head>
-    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet" >
-    <link href="static/Flat-UI-master/css/flat-ui.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" >
+        <link href="Flat-UI-master/css/flat-ui.css" rel="stylesheet">
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="http://fb.me/react-0.10.0.js"></script>
     <script src="http://fb.me/JSXTransformer-0.10.0.js"></script>
@@ -9,6 +10,7 @@
 
   </head>
   <body>
+    <div class="container">
 
 		
   
@@ -70,29 +72,27 @@
                 }).done(function(incoming_data) {
                     console.log(incoming_data);
                 });
-
-                //then go to twitter and FAVE it.
-                /// make an AJAX request.. hit my own server w the tweet id, then from there,
-                //use OAuth to fave the tweet.
-                // then do something here like change the color of the tweet.
             },
             render: function(){
+                var wellString = "well";
+                var labelString = "label label-default";
                 console.log("rendering tweet");
-                return (<div onClick={this.onClick}>
-                    <h2> {this.props.text}</h2> 
-                    <br/>
-                    <h3>{this.props.username}</h3>
-                    <br/>
-                    <div>{this.props.name}</div>
+                return (<div className={wellString} onClick={this.onClick}>
+                    <img src={this.props.image}/>
+                    <p><span className={labelString}>@{this.props.username}</span>
+                    <span>      {this.props.name}</span></p>
+                    <p> {this.props.text}</p> 
+
                     </div>
                     );
             }
         });
+
         var TweetList = React.createClass({
             render: function(){
                 var tweets = this.props.data.map(function(tweet){
-                    console.log("tweet username ", tweet.username);
-                    return (<Tweet username= {tweet.user.screen_name} name = {tweet.user.name} text ={tweet.text} id_str={tweet.id_str}/>);
+                console.log("tweet username ", tweet.username);
+                return (<Tweet username= {tweet.user.screen_name} name = {tweet.user.name} text ={tweet.text} id_str={tweet.id_str} image={tweet.profile_image_url}/>);
                 });
                 return (
                     <div>
@@ -103,14 +103,8 @@
         });
 
     React.renderComponent(<TweetView/>, document.getElementById("tweetsview"));
-
-
-
-
-
-
   	</script>
 
-
+</div>
 
   </body>

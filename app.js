@@ -29,7 +29,7 @@ if(process.env.PORT){
 else{
 	console.log("not using their port");
 }
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 5040;
 app.listen(port, function() {
   console.log('Listening on ' + port);
 });

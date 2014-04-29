@@ -10,7 +10,7 @@ var http = require('http');
 var twitter = new twitterAPI({
 	consumerKey: key.consumerKey,
 	consumerSecret: key.consumerSecret,
-	callback: "http://sheltered-crag-4575.herokuapp.com/auth/twitter/callback"
+	callback: "http://immense-tundra-4193.herokuapp.com/auth/twitter/callback"
 });
 
 var OAuth = require('oauth').OAuth;
@@ -21,14 +21,14 @@ var oa = new OAuth(
 	key.consumerKey,
 	key.consumerToken,
 	"1.0",
-	"http://sheltered-crag-4575.herokuapp.com/auth/twitter/callback",
+	"http://immense-tundra-4193.herokuapp.com/auth/twitter/callback",
 	"HMAC-SHA1"
 	);
-router.get('/'), function(req, res){
+router.get('/', function(req, res){
 	 res.render('index', { title: 'Express' });
 
 });
-router.get('/tweets'), function(req, res){
+router.get('/tweets', function(req, res){
 	 res.render('searching', { title: 'Express' });
 
 });
